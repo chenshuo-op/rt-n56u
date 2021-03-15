@@ -4,7 +4,13 @@
 [ -z "$6" ] && exit 0
 cd /etc/storage/
 exp=`echo "$1 $2 $3 $4 $5" |sed 's/a/\*/g'`
-if [ ! -f "cron/crontabs/admin" ] || [ -z "$(cat cron/crontabs/admin |grep $6)" ]; then
-	echo "$exp /usr/bin/$6 > /dev/null 2>&1" >> cron/crontabs/admin && exit 1
+if [ "$6" == "reboot" ] ; then
+        if [ ! -f "cron/crontabs/admin" ] || [ -z "$(cat cron/crontabs/admin |grep $6)" ]; then
+	        echo "$exp $6" >> cron/crontabs/admin && exit 1
+	fi
+else
+        if [ ! -f "cron/crontabs/admin" ] || [ -z "$(cat cron/crontabs/admin |grep $6)" ]; then
+	        echo "$exp /usr/bin/$6 > /dev/null 2>&1" >> cron/crontabs/admin && exit 1
+        fi
 fi
 exit 0
