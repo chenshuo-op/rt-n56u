@@ -816,6 +816,7 @@ int
 init_crontab(void)
 {
 	int ret = 0; //no change
+	ret |= system("/sbin/check_crontab.sh 30 4 a a a reboot");
 #if defined (APP_SCUT)
 	ret |= system("/sbin/check_crontab.sh a/1 a a a a scutclient_watchcat.sh");
 #endif
